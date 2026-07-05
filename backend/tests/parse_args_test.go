@@ -6,20 +6,7 @@ import (
 )
 
 //Feature: Read path to repo from input
-//I should write one test that loops every scenario??
-/*
-tests =
 
-flag provided
-
-flag empty, args contains one
-
-flag empty, args empty
-
-flag empty, args >1
-
-flag provided + args also provided
-*/
 type testCase struct {
 	name string
 
@@ -60,6 +47,24 @@ func TestParseArgs (t *testing.T) {
 			path: "~/",
 			args: []string{"./"},
 			want: "~/",
+		},
+		{
+			name: "path not provided but positional arguments is nil",
+			path: "",
+			args: []string{},
+			want: "",
+		},
+		{
+			name: "path not provided but positional arguments have a single empty string",
+			path: "",
+			args: []string{""},
+			want: "",
+		},
+		{
+			name: "path provided using unicode chars",
+			path: "📁/テスト",
+			args: []string{},
+			want: "📁/テスト",
 		},
 	}
 	for _, tc := range tests {
@@ -112,12 +117,3 @@ Given user compiled the backend
 When the user executes the program with a --path flag value and args has values
 Then the program assigns to path the value in the --path flag
 */
-func TestFlagBeforeArgs(t *testing.T) {
-	path:= "~/"
-	args:= []string{"./"}
-	want:= "~/"
-	got:= utils.ParseArgs(path, args)
-	if got != want {
-		t.Errorf(`ParseArgs("~/", ["./"]) = %q, want match for %#q`, got, want)
-	}
-}

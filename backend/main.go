@@ -35,6 +35,7 @@ func Run() error {
 		return errors.New("No repository path provided")
 	} else {
 		fmt.Println("path: ", path)
+		utils.ValidatePath(path)
 		return nil
 	}
 }

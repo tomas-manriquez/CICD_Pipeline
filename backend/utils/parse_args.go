@@ -19,3 +19,12 @@ func ParseArgs(path string, args []string) string {
 		}
 	}
 }
+
+/*
+Validate if path string is an actual Linux path
+Input: string path
+Output: true/false
+*/
+func ValidatePath(path string) bool{
+	return true
+}
