@@ -2,6 +2,7 @@ package main
 
 import (
 	"cicd_pipeline/utils"
+	"errors"
 	"flag"
 	"fmt"
 )
@@ -9,24 +10,31 @@ import (
 func main() {
 	//declare flag variable
 	//path -> String
-	var path string
-	flag.StringVar(&path, "path", "", "path to golang repository")
 
 	//read flags and argsfrom command
-	flag.Parse()
-	args := flag.Args()
-
-	//parse args
-	path = utils.ParseArgs(path, args)
-
-	//print to STDOUT
-	if path == "" {
-		fmt.Println("no path found!")
-		fmt.Println("command line arguments: ", args)
-		fmt.Println("ERR -> EXIT")
-		return
-	} else {
-		fmt.Println("path: ", path)
+	if err := Run(); err != nil {
+		fmt.Println(err)
 	}
+
 }
 
+func Run() error {
+	//read flag, args
+	//if no path found, return error
+	var path string
+	flag.StringVar(&path, "path", "", "path to golang repository")
+	flag.Parse()
+
+	args := flag.Args()
+	path = utils.ParseArgs(path, args)
+
+	//return error if no path found
+	if path == "" {
+		fmt.Println("command line arguments: ", args)
+		fmt.Println("path: ", path)
+		return errors.New("No repository path provided")
+	} else {
+		fmt.Println("path: ", path)
+		return nil
+	}
+}
