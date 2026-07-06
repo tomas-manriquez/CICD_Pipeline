@@ -33,9 +33,7 @@ func Run() error {
 		fmt.Println("command line arguments: ", args)
 		fmt.Println("path: ", path)
 		return errors.New("No repository path provided")
-	} else {
-		fmt.Println("path: ", path)
-		utils.ValidatePath(path)
-		return nil
 	}
+	fmt.Println("path: ", path)
+	return nil
 }
