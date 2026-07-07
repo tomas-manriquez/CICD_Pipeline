@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cicd_pipeline/stages"
 	"cicd_pipeline/utils"
 	"errors"
 	"flag"
@@ -35,5 +36,9 @@ func Run() error {
 		return errors.New("No repository path provided")
 	}
 	fmt.Println("path: ", path)
+
+	//run stage 1: go test <path>
+	stages.ExecGoTest(path)
+
 	return nil
 }
